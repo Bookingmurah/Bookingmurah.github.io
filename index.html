@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Booking</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background-image: url('https://blogger.googleusercontent.com/img/a/AVvXsEhkZ-8rHQnU0PVzIpghgb21PHQpwjdV4LFPgKkfNzE9-sRh_du5NVaybqU0Zx-M73k-n75MlSsvTVljn4A-IOCf368vxGtVXwH4UmZECV9mMNFtCL7KfWUHt2nkINfKGBL2RJEB38S6RO0H2dXr28T9VXti3yQEvlx1z2WxZkUZd94WlbFC8ctnX1Pu');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 115vh;
+        }
+        .form-container { 
+            width: 100%; 
+            max-width: 400px; 
+            padding: 20px; 
+            background-color: rgba(255, 255, 255, 0.9); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            border-radius: 8px; 
+            text-align: center; 
+            backdrop-filter: blur(5px); 
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .main-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        form label { display: block; margin-top: 15px; font-weight: bold; color: #333; text-align: left; }
+        form input, form select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; }
+        .date-group { display: flex; gap: 10px; }
+        .date-group input { width: 100%; }
+        form button { width: 100%; padding: 10px; margin-top: 20px; background-color: #28a745; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease; }
+        form button:hover { background-color: #218838; }
+        .promo-checkbox-container { 
+            margin-top: 15px; 
+            text-align: left; 
+            font-size: 14px; 
+            display: flex; 
+            align-items: center; 
+        }
+        .promo-checkbox { margin-right: 8px; }
+        .promo-result { margin-top: 15px; font-weight: bold; color: #333; }
+        .harga-container { position: relative; }
+        .harga-container input { padding-left: 40px; }
+        .harga-container::before { content: "Rp"; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #333; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <!-- Logo -->
+        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhkZ-8rHQnU0PVzIpghgb21PHQpwjdV4LFPgKkfNzE9-sRh_du5NVaybqU0Zx-M73k-n75MlSsvTVljn4A-IOCf368vxGtVXwH4UmZECV9mMNFtCL7KfWUHt2nkINfKGBL2RJEB38S6RO0H2dXr28T9VXti3yQEvlx1z2WxZkUZd94WlbFC8ctnX1Pu" alt="Logo" class="logo">
+        
+        <!-- Gambar utama -->
+        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhkZ-8rHQnU0PVzIpghgb21PHQpwjdV4LFPgKkfNzE9-sRh_du5NVaybqU0Zx-M73k-n75MlSsvTVljn4A-IOCf368vxGtVXwH4UmZECV9mMNFtCL7KfWUHt2nkINfKGBL2RJEB38S6RO0H2dXr28T9VXti3yQEvlx1z2WxZkUZd94WlbFC8ctnX1Pu" alt="Tampilan Gambar" class="main-image">
+
+        <form id="checkinForm" onsubmit="submitForm(event)">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" name="nama" required>
+
+            <label for="telepon">Nomor Telepon</label>
+            <input type="tel" id="telepon" name="telepon" pattern="^08[1-9][0-9]{7,10}$" required placeholder="Contoh: 081234567890">
+
+            <label for="alamat">Alamat Tempat</label>
+            <input type="text" id="alamat" name="alamat" required>
+
+            <label>Tanggal Booking / Check-out</label>
+            <div class="date-group">
+                <input type="date" id="checkin" name="checkin" required>
+                <input type="date" id="checkout" name="checkout" required>
+            </div>
+
+            <label for="tamu">Jumlah Tamu (maksimal 16)</label>
+            <input type="number" id="tamu" name="tamu" min="1" max="16" required oninput="validateTamu()">
+
+            <label for="kamar">Jenis</label>
+            <select id="kamar" name="kamar" required>
+                <option value="standar">Standar</option>
+                <option value="deluxe">Deluxe</option>
+                <option value="suite">Suite</option>
+            </select>
+
+            <label for="harga">Nominal Harga</label>
+            <div class="harga-container">
+                <input type="text" id="harga" name="harga" inputmode="numeric" oninput="formatRupiah(this)" placeholder="Masukkan nominal harga" required>
+            </div>
+
+            <div class="promo-checkbox-container">
+                <input type="checkbox" id="promoCheckbox" class="promo-checkbox" onclick="klaimPromo()">
+                <label for="promoCheckbox">Saya setuju menggunakan promo spesial kami dan menyetujui semua ketentuan dari layanan kami</label>
+            </div>
+
+            <button type="submit">Check-in</button>
+        </form>
+        <div class="promo-result" id="promoResult"></div>
+    </div>
+
+    <script>
+        function formatRupiah(element) {
+            let value = element.value.replace(/[^,\d]/g, '').toString();
+            let split = value.split(',');
+            let sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            element.value = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            alert("Terima kasih, data Anda telah berhasil dikirim!");
+            // Tambahkan logika pengiriman data ke server di sini jika dibutuhkan
+        }
+        
+        function klaimPromo() {
+            const promoCheckbox = document.getElementById("promoCheckbox");
+            const hargaElement = document.getElementById("harga");
+            let harga = parseInt(hargaElement.value.replace(/\./g, ''));
+            
+            if (promoCheckbox.checked && !isNaN(harga)) {
+                let diskon = harga * 0.1;
+                let hargaPromo = harga - diskon;
+                document.getElementById("promoResult").innerText = "Harga setelah promo: Rp " + hargaPromo.toLocaleString('id-ID');
+            } else if (!promoCheckbox.checked) {
+                document.getElementById("promoResult").innerText = "";
+            } else {
+                alert("Masukkan nominal harga terlebih dahulu.");
+            }
+        }
+
+        function validateTamu() {
+            const tamuInput = document.getElementById("tamu");
+            const tamuValue = parseInt(tamuInput.value);
+
+            if (tamuValue > 16) {
+                alert("Jumlah tamu tidak boleh lebih dari 16.");
+                tamuInput.value = 16; // Mengatur kembali ke 16 jika melebihi
+            }
+        }
+    </script>
+</body>
+</html>
