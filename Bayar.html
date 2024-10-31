@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: url('https://blogger.googleusercontent.com/img/a/AVvXsEhkZ-8rHQnU0PVzIpghgb21PHQpwjdV4LFPgKkfNzE9-sRh_du5NVaybqU0Zx-M73k-n75MlSsvTVljn4A-IOCf368vxGtVXwH4UmZECV9mMNFtCL7KfWUHt2nkINfKGBL2RJEB38S6RO0H2dXr28T9VXti3yQEvlx1z2WxZkUZd94WlbFC8ctnX1Pu') no-repeat center center/cover;
+        }
+        .bayar-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+        .bayar-container h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .info {
+            color: #555;
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        .ovo-info {
+            background: #5c2c90;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .ovo-info strong {
+            font-size: 18px;
+        }
+        .ovo-info small {
+            font-size: 12px;
+            color: #e0c9f7;
+            display: block;
+            margin-top: 8px;
+        }
+        .ovo-logo {
+            width: 100px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="bayar-container">
+        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhkZ-8rHQnU0PVzIpghgb21PHQpwjdV4LFPgKkfNzE9-sRh_du5NVaybqU0Zx-M73k-n75MlSsvTVljn4A-IOCf368vxGtVXwH4UmZECV9mMNFtCL7KfWUHt2nkINfKGBL2RJEB38S6RO0H2dXr28T9VXti3yQEvlx1z2WxZkUZd94WlbFC8ctnX1Pu" alt="Logo" class="ovo-logo">
+
+        <h2>Rincian Pemesanan</h2>
+        <div class="info">Nama: <span id="nama"></span></div>
+        <div class="info">Telepon: <span id="telepon"></span></div>
+        <div class="info">Alamat: <span id="alamat"></span></div>
+        <div class="info">Tanggal Check-in: <span id="checkin"></span></div>
+        <div class="info">Tanggal Check-out: <span id="checkout"></span></div>
+        <div class="info">Jumlah Tamu: <span id="tamu"></span></div>
+        <div class="info">Jenis Kamar: <span id="kamar"></span></div>
+        <div class="info">Harga: <span id="harga"></span></div>
+
+        <!-- Informasi Pembayaran OVO -->
+        <div class="ovo-info">
+            <strong>Metode Pembayaran: OVO</strong><br>
+            No OVO: <strong>083141726485</strong><br>
+            A/N: <strong>MAXXXO</strong>
+            <small>Setelah pembayaran, silakan Cetak ID Booking.</small>
+        </div>
+
+        <button onclick="lanjutPembayaran()">CETAK ID BOOKING</button>
+    </div>
+
+    <script>
+        // Ambil data dari localStorage dan tampilkan
+        document.getElementById("nama").textContent = localStorage.getItem("nama");
+        document.getElementById("telepon").textContent = localStorage.getItem("telepon");
+        document.getElementById("alamat").textContent = localStorage.getItem("alamat");
+        document.getElementById("checkin").textContent = localStorage.getItem("checkin");
+        document.getElementById("checkout").textContent = localStorage.getItem("checkout");
+        document.getElementById("tamu").textContent = localStorage.getItem("tamu");
+        document.getElementById("kamar").textContent = localStorage.getItem("kamar");
+        document.getElementById("harga").textContent = "Rp " + localStorage.getItem("harga");
+
+        function lanjutPembayaran() {
+            window.location.href = "id.html"; // Mengarahkan ke halaman ID Booking
+        }
+    </script>
+</body>
+</html>
